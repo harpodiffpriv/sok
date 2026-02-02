@@ -1,51 +1,43 @@
-import plotly.express as px
 import pandas as pd
+import plotly.express as px
 
-df = pd.read_excel("scores.xlsx", engine="openpyxl")
+df = pd.read_excel("scores.xlsx")
 
 fig = px.scatter_3d(
     df,
-    x="Privacy", y="Utility", z="Safety",
-    color="Safety", text="Paper"
-)
-fig.update_layout(
-    font=dict(
-        family="Nimbus Roman No9 L",  
-        size=14,
-        color="black"
-    ),
-    scene=dict(
-        xaxis=dict(
-            title=dict(
-                text="Privacy",
-                font=dict(family="Nimbus Roman No9 L", size=30, color="black")  
-            )
-        ),
-        yaxis=dict(
-            title=dict(
-                text="Utility",
-                font=dict(family="Nimbus Roman No9 L", size=30, color="black")  
-            )
-        ),
-        zaxis=dict(
-            title=dict(
-                text="Safety",
-                font=dict(family="Nimbus Roman No9 L", size=30, color="black")  
-            )
-        )
-    )
-)
+    x="Privacy",
+    y="Utility",
+    z="Safety",
+    text="Paper",
+    color="Safety",
+    range_x=[0,1],
+    range_y=[0,1],
+    range_z=[0,1])
 
 fig.update_traces(
-    hovertemplate="<b>Privacy</b>=%{x}<br><b>Utility</b>=%{y}<br><b>Safety</b>=%{z}<br><b>Paper</b>=%{text}",
+    marker=dict(size=10, opacity=0.9),
     hoverlabel=dict(
-        font_size=30,
-        font_family="Nimbus Roman No9 L",  
-        bgcolor="rgba(255,255,255,0.9)",
+        font_size=50,
+        font_family="Nimbus Roman No9 L",
+        bgcolor="rgba(200,200,220,0.35)",
         bordercolor="black"
-    )
+    ),
+    textfont=dict(
+        size=21,       
+        color="black"
+    ),
+    textposition="top center"
 )
-
-fig.update_coloraxes(colorbar_title="Range")
+fig.update_layout(
+    scene=dict(
+        xaxis_title="Privacy",
+        yaxis_title="Utility",
+        zaxis_title="Safety",
+        xaxis=dict(backgroundcolor="white", gridcolor="lightgray"),
+        yaxis=dict(backgroundcolor="white", gridcolor="lightgray"),
+        zaxis=dict(backgroundcolor="white", gridcolor="lightgray"),
+    ),
+    margin=dict(l=0, r=0, b=0, t=40)
+)
 
 fig.show()
